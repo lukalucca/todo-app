@@ -1,9 +1,23 @@
+const { json } = require("express")
+
+function completarTarefa(id) {
+    fetch("http://localhost:3000/completar", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id })
+    })
+
+    window.location.reload()
+}
+
 function alterarTema() {
     const tema = localStorage.getItem("tema")
     const body = document.querySelector("body")
     const button = document.querySelector(".tema-button")
 
-    if(tema){
+    if (tema) {
         let novoTema
 
         if (tema === "light") {
@@ -28,7 +42,7 @@ function alterarTema() {
 
 function verificarTema() {
     const tema = localStorage.getItem("tema")
-    const body = document.querySelector('body')
+    const body = document.querySelector("body")
     const button = document.querySelector(".tema-button")
 
     if (tema){
@@ -42,4 +56,4 @@ function verificarTema() {
     }
 }
 
-verificarTema
+verificarTema()
