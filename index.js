@@ -17,6 +17,24 @@ app.use(express.urlencoded({
 app.use(express.json())
 
 //ROTAS
+app.post('/excluir', (requisicao, resposta) => {
+    const id = requisicao.body.id
+  
+    const sql = `
+      DELETE FROM tarefas 
+      WHERE id = ${id}
+    `
+  
+    conexao.query(sql, (erro) => {
+      if(erro) {
+        return console.log(erro)
+      }
+
+      resposta.redirect('/')
+    })
+})
+
+
 app.post('/completar', (requisicao, resposta) =>{
     const id = requisicao.body.id
 
@@ -137,8 +155,8 @@ app.get('/', (requisicao, resposta) => {
             }
         })
 
-        const tarefasAtivas = tarefas.filter((tarefas) =>{
-            return tarefas.completa === false && tarefa
+        const tarefasAtivas = tarefas.filter((tarefa) =>{
+            return tarefa.completa === false && tarefa
         })
 
         const quantidadeTarefasAtivas = tarefasAtivas.length
